@@ -1,5 +1,7 @@
 <script lang="ts">
-	import Login from '$lib/Login.svelte';
+	import { currentUser } from '$lib/auth';
 </script>
 
-<Login />
+{#if $currentUser}
+	<h1>Hello {$currentUser.username}</h1>
+{/if}
