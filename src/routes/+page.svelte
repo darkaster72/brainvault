@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { pb } from '$lib';
 	import { currentUser } from '$lib/auth';
+	import AddUrlDialog from '$lib/components/AddUrlDialog.svelte';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
 	import ArticleView from '$lib/components/ArticleTile.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
@@ -11,6 +12,13 @@
 	import { onMount } from 'svelte';
 
 	let articles: Article[] = $state([]);
+
+	const handleAdd = async (url: string) => {
+		const newArtice = await pb
+			.collection('articles')
+			.create<Article>({ url, userid: $currentUser.id });
+		articles = [newArtice, ...articles];
+	};
 
 	onMount(async () => {
 		if ($currentUser) {
@@ -48,6 +56,9 @@
 						<ArticleView {article} />
 					{/each}
 				</div>
+			</div>
+			<div class="absolute bottom-0 right-0 z-50 m-8">
+				<AddUrlDialog onAdd={handleAdd} />
 			</div>
 		</Sidebar.Inset>
 	</Sidebar.Provider>
