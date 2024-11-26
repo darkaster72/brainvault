@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { pb } from '$lib';
+	import { timeToRead } from '$lib/article-utils';
 	import type { Article } from '$lib/types/article';
-	import { timeToRead } from '$lib/utils';
 	import dayjs from 'dayjs';
 	import { onMount } from 'svelte';
 	let article: Article | null = $state(null);
@@ -27,7 +27,7 @@
 		<div class="flex w-full items-center justify-center">
 			<div class="flex flex-col p-4 md:w-2/3 lg:w-1/2">
 				<p class="mb-2 text-sm text-slate-800">
-					{dayjs(article.created).format('DD MMMM, YYYY')} • {timeToRead(article.length)} read
+					{dayjs(article.created).format('DD MMMM, YYYY')} • {timeToRead(article.length)}
 				</p>
 				<h1 class="mb-4 text-3xl font-bold">{article.title}</h1>
 				<span class="mb-2 text-sm text-slate-800">
