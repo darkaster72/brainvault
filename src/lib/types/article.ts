@@ -1,12 +1,18 @@
 export interface Article {
+	byline: string;
 	content: string;
-	created: Date;
+	created: string;
 	description: string;
+	excerpt: string;
 	id: string;
+	lang: string;
+	length: number;
 	notes: string;
-	tags: object[];
+	publishedTime: string;
+	siteName: string;
+	tags: string[];
 	title: string;
-	updated: Date;
+	updated: string;
 	url: string;
 	userid: string;
 }
