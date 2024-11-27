@@ -16,7 +16,7 @@
 	const handleAdd = async (url: string) => {
 		const newArtice = await pb
 			.collection('articles')
-			.create<Article>({ url, userid: $currentUser.id });
+			.create<Article>({ url, title: url, userid: $currentUser.id });
 		articles = [newArtice, ...articles];
 	};
 
