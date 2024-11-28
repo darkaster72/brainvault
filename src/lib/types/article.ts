@@ -1,6 +1,7 @@
 export interface Article {
 	byline: string;
 	content: string;
+	content_status: 'loading' | 'loaded' | 'error';
 	created: string;
 	description: string;
 	excerpt: string;

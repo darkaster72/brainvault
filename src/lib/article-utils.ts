@@ -11,7 +11,8 @@ export function daysAgo(date: string) {
 		{ unit: 'year', value: now.diff(inputDate, 'year') },
 		{ unit: 'month', value: now.diff(inputDate, 'month') % 12 },
 		{ unit: 'day', value: now.diff(inputDate, 'day') % 30 },
-		{ unit: 'min', value: now.diff(inputDate, 'minute') % 30 }
+		{ unit: 'hour', value: now.diff(inputDate, 'hour') % 24 },
+		{ unit: 'minute', value: now.diff(inputDate, 'minute') % 60 }
 	];
 
 	const largestDiff = diff.find(({ value }) => value > 0);

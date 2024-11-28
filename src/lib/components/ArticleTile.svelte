@@ -5,6 +5,7 @@
 	import * as Card from './ui/card';
 
 	const { article }: { article: Article } = $props();
+	const isArticleLoaded = article.content_status == 'loaded';
 	const handleClick = () => {
 		goto(`/articles/${article.id}`);
 	};
@@ -21,7 +22,10 @@
 
 <Card.Root onclick={handleClick} class="cursor-pointer">
 	<Card.Header>
-		<p class="text-sm text-gray-800">{daysAgo(article.created)} • {timeToRead(article.length)}</p>
+		<p class="text-sm text-gray-800">
+			{daysAgo(article.created)}
+			{isArticleLoaded ? ' • ' + timeToRead(article.length) : ''}
+		</p>
 		<Card.Title class="text-xl">{article.title}</Card.Title>
 		<p class="mt-2 text-xs text-gray-800/60">{byline.filter((e) => !!e).join(' | ')}</p>
 	</Card.Header>

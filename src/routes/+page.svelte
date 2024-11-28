@@ -52,7 +52,7 @@
 			<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
 				<div class="grid gap-4">
 					{#if articles.length === 0}
-						<p>No articles found</p>
+						<p>No articles yet</p>
 					{/if}
 					{#each articles as article (article.id)}
 						<ArticleView {article} />
