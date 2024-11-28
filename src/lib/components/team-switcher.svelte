@@ -1,9 +1,8 @@
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import { useSidebar } from "$lib/components/ui/sidebar/index.js";
-	import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
-	import Plus from "lucide-svelte/icons/plus";
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
+	import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down';
 
 	// This should be `Component` after lucide-svelte updates types
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,7 +23,7 @@
 						class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 					>
 						<div
-							class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+							class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
 						>
 							<activeTeam.logo class="size-4" />
 						</div>
@@ -38,7 +37,7 @@
 					</Sidebar.MenuButton>
 				{/snippet}
 			</DropdownMenu.Trigger>
-			<DropdownMenu.Content
+			<!-- <DropdownMenu.Content
 				class="w-[--bits-dropdown-menu-anchor-width] min-w-56 rounded-lg"
 				align="start"
 				side={sidebar.isMobile ? "bottom" : "right"}
@@ -63,7 +62,7 @@
 					</div>
 					<div class="text-muted-foreground font-medium">Add team</div>
 				</DropdownMenu.Item>
-			</DropdownMenu.Content>
+			</DropdownMenu.Content> -->
 		</DropdownMenu.Root>
 	</Sidebar.MenuItem>
 </Sidebar.Menu>
