@@ -1,22 +1,24 @@
 <script lang="ts">
+	import { pb } from '$lib';
 	import { loadArticle, saveArticle } from '$lib/api/article-api';
 	import { currentUser } from '$lib/auth';
 	import AddUrlDialog from '$lib/components/AddUrlDialog.svelte';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
-	import ArticleView from '$lib/components/ArticleTile.svelte';
+	import ArticleTile from '$lib/components/ArticleTile.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import type { Article } from '$lib/types/article';
-	import { onMount } from 'svelte';
+	import { ArticleView } from '$lib/types/article';
+	import { onDestroy, onMount } from 'svelte';
 
-	let articles: Article[] = $state([]);
+	let articles: ArticleView[] = $state([]);
+	let unsubscribe: () => void;
 
 	const handleAdd = async (url: string) => {
 		try {
-			const newArticle = await saveArticle({ url, title: url, userid: $currentUser.id });
-			articles = [newArticle, ...articles];
+			await saveArticle({ url, title: url, userid: $currentUser.id });
 		} catch (e) {
 			console.error(e);
 		}
@@ -26,11 +28,30 @@
 		if ($currentUser) {
 			try {
 				const articleList = await loadArticle();
-				articles.push(...articleList.items);
+				articles = articleList.items;
+				unsubscribe = await pb
+					.collection('articles')
+					.subscribe<Article>('*', ({ action, record }) => {
+						console.log('Article event: ', action, record);
+						if (action == 'create') {
+							articles = [new ArticleView(record), ...articles];
+						} else if (action == 'update') {
+							const index = articles.findIndex((a) => a.id === record.id);
+							if (index !== -1) {
+								articles[index] = new ArticleView(record);
+							}
+						} else if (action == 'delete') {
+							articles = articles.filter((a) => a.id !== record.id);
+						}
+					});
 			} catch (e) {
 				console.error(e);
 			}
 		}
+	});
+
+	onDestroy(() => {
+		unsubscribe?.();
 	});
 </script>
 
@@ -55,7 +76,7 @@
 						<p>No articles yet</p>
 					{/if}
 					{#each articles as article (article.id)}
-						<ArticleView {article} />
+						<ArticleTile {article} />
 					{/each}
 				</div>
 			</div>
