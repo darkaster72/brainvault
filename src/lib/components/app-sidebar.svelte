@@ -1,100 +1,172 @@
 <script lang="ts" module>
-	interface SidebarItem {
-		title: string;
-		url: string;
-		items?: {
-			title: string;
-			url: string;
-			isActive?: boolean;
-		}[];
-	}
-	interface SidebarData {
-		navMain: SidebarItem[];
-	}
+	import AudioWaveform from 'lucide-svelte/icons/audio-waveform';
+	import BookOpen from 'lucide-svelte/icons/book-open';
+	import Bot from 'lucide-svelte/icons/bot';
+	import ChartPie from 'lucide-svelte/icons/chart-pie';
+	import Command from 'lucide-svelte/icons/command';
+	import Frame from 'lucide-svelte/icons/frame';
+	import GalleryVerticalEnd from 'lucide-svelte/icons/gallery-vertical-end';
+	import Map from 'lucide-svelte/icons/map';
+	import Settings2 from 'lucide-svelte/icons/settings-2';
+	import SquareTerminal from 'lucide-svelte/icons/square-terminal';
 
-	const data: SidebarData = {
+	// This is sample data.
+	const data = {
+		user: {
+			name: 'shadcn',
+			email: 'm@example.com',
+			avatar: '/avatars/shadcn.jpg'
+		},
+		teams: [
+			{
+				name: 'Acme Inc',
+				logo: GalleryVerticalEnd,
+				plan: 'Enterprise'
+			},
+			{
+				name: 'Acme Corp.',
+				logo: AudioWaveform,
+				plan: 'Startup'
+			},
+			{
+				name: 'Evil Corp.',
+				logo: Command,
+				plan: 'Free'
+			}
+		],
 		navMain: [
 			{
-				title: 'Home',
-				url: '/'
+				title: 'Playground',
+				url: '#',
+				icon: SquareTerminal,
+				isActive: true,
+				items: [
+					{
+						title: 'History',
+						url: '#'
+					},
+					{
+						title: 'Starred',
+						url: '#'
+					},
+					{
+						title: 'Settings',
+						url: '#'
+					}
+				]
 			},
 			{
-				title: 'Library',
-				url: '/library'
+				title: 'Models',
+				url: '#',
+				icon: Bot,
+				items: [
+					{
+						title: 'Genesis',
+						url: '#'
+					},
+					{
+						title: 'Explorer',
+						url: '#'
+					},
+					{
+						title: 'Quantum',
+						url: '#'
+					}
+				]
 			},
 			{
-				title: 'Trash',
-				url: '/trash'
+				title: 'Documentation',
+				url: '#',
+				icon: BookOpen,
+				items: [
+					{
+						title: 'Introduction',
+						url: '#'
+					},
+					{
+						title: 'Get Started',
+						url: '#'
+					},
+					{
+						title: 'Tutorials',
+						url: '#'
+					},
+					{
+						title: 'Changelog',
+						url: '#'
+					}
+				]
 			},
 			{
 				title: 'Settings',
-				url: '/settings'
+				url: '#',
+				icon: Settings2,
+				items: [
+					{
+						title: 'General',
+						url: '#'
+					},
+					{
+						title: 'Team',
+						url: '#'
+					},
+					{
+						title: 'Billing',
+						url: '#'
+					},
+					{
+						title: 'Limits',
+						url: '#'
+					}
+				]
+			}
+		],
+		projects: [
+			{
+				name: 'Design Engineering',
+				url: '#',
+				icon: Frame
 			},
 			{
-				title: 'Help',
-				url: '/help'
+				name: 'Sales & Marketing',
+				url: '#',
+				icon: ChartPie
+			},
+			{
+				name: 'Travel',
+				url: '#',
+				icon: Map
 			}
 		]
 	};
 </script>
 
 <script lang="ts">
+	import { currentUser } from '$lib/auth';
+	import NavMain from '$lib/components/nav-main.svelte';
+	import NavProjects from '$lib/components/nav-projects.svelte';
+	import NavUser from '$lib/components/nav-user.svelte';
+	import TeamSwitcher from '$lib/components/team-switcher.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import GalleryVerticalEnd from 'lucide-svelte/icons/gallery-vertical-end';
 	import type { ComponentProps } from 'svelte';
 
-	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
+	let {
+		ref = $bindable(null),
+		collapsible = 'icon',
+		...restProps
+	}: ComponentProps<typeof Sidebar.Root> = $props();
 </script>
 
-<Sidebar.Root variant="floating" {...restProps}>
+<Sidebar.Root bind:ref {collapsible} {...restProps}>
 	<Sidebar.Header>
-		<Sidebar.Menu>
-			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="lg">
-					{#snippet child({ props })}
-						<a href="##" {...props}>
-							<div
-								class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
-							>
-								<GalleryVerticalEnd class="size-4" />
-							</div>
-							<div class="flex flex-col gap-0.5 leading-none">
-								<span class="font-semibold">Brain Vault</span>
-							</div>
-						</a>
-					{/snippet}
-				</Sidebar.MenuButton>
-			</Sidebar.MenuItem>
-		</Sidebar.Menu>
+		<TeamSwitcher teams={data.teams} />
 	</Sidebar.Header>
 	<Sidebar.Content>
-		<Sidebar.Group>
-			<Sidebar.Menu class="gap-2">
-				{#each data.navMain as mainItem (mainItem.title)}
-					<Sidebar.MenuItem>
-						<Sidebar.MenuButton class="font-medium">
-							{#snippet child({ props })}
-								<a href={mainItem.url} {...props}>
-									{mainItem.title}
-								</a>
-							{/snippet}
-						</Sidebar.MenuButton>
-						{#if mainItem.items?.length}
-							<Sidebar.MenuSub class="ml-0 border-l-0 px-1.5">
-								{#each mainItem.items as item (item.title)}
-									<Sidebar.MenuSubItem>
-										<Sidebar.MenuSubButton isActive={item.isActive}>
-											{#snippet child({ props })}
-												<a href={item.url} {...props}>{item.title}</a>
-											{/snippet}
-										</Sidebar.MenuSubButton>
-									</Sidebar.MenuSubItem>
-								{/each}
-							</Sidebar.MenuSub>
-						{/if}
-					</Sidebar.MenuItem>
-				{/each}
-			</Sidebar.Menu>
-		</Sidebar.Group>
+		<NavMain items={data.navMain} />
+		<NavProjects projects={data.projects} />
 	</Sidebar.Content>
+	<Sidebar.Footer>
+		<NavUser user={$currentUser} />
+	</Sidebar.Footer>
+	<Sidebar.Rail />
 </Sidebar.Root>

@@ -1,12 +1,17 @@
+import { goto } from '$app/navigation';
 import { pb } from '$lib/pocketbase';
 import { writable } from 'svelte/store';
 
 export const currentUser = writable(pb.authStore.record as User);
 
-pb.authStore.onChange((record) => {
-	console.log('authStore.onChange', record);
+pb.authStore.onChange(() => {
 	currentUser.set(pb.authStore.record as User);
 });
+
+export function logOut() {
+	pb.authStore.clear();
+	goto('/');
+}
 
 export interface User {
 	avatar: string;

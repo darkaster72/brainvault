@@ -1,4 +1,4 @@
-import { daysAgo, formatUrl } from '$lib/article-utils';
+import { daysAgo, formatUrl } from '$lib/utils/article-utils';
 import dayjs from 'dayjs';
 
 export interface Article {
