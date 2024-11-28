@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { WithElementRef } from "bits-ui";
-	import type { HTMLAttributes } from "svelte/elements";
-	import { cn } from "$lib/utils.js";
+	import { cn } from '$lib/utils.js';
+	import type { WithElementRef } from 'bits-ui';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import { fade } from 'svelte/transition';
 
 	let {
 		ref = $bindable(null),
@@ -17,8 +18,9 @@
 <div
 	role="heading"
 	aria-level={level}
+	transition:fade
 	bind:this={ref}
-	class={cn("text-2xl font-semibold leading-none tracking-tight", className)}
+	class={cn('text-2xl font-semibold leading-none tracking-tight', className)}
 	{...restProps}
 >
 	{@render children?.()}
