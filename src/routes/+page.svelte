@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pb } from '$lib';
+	import { loadArticle, saveArticle } from '$lib/api/article-api';
 	import { currentUser } from '$lib/auth';
 	import AddUrlDialog from '$lib/components/AddUrlDialog.svelte';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
@@ -14,19 +14,21 @@
 	let articles: Article[] = $state([]);
 
 	const handleAdd = async (url: string) => {
-		const newArtice = await pb
-			.collection('articles')
-			.create<Article>({ url, title: url, userid: $currentUser.id });
-		articles = [newArtice, ...articles];
+		try {
+			const newArticle = await saveArticle({ url, title: url, userid: $currentUser.id });
+			articles = [newArticle, ...articles];
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	onMount(async () => {
 		if ($currentUser) {
 			try {
-				const articlesList = await pb.collection('articles').getList<Article>();
-				articles.push(...articlesList.items);
-			} catch (error) {
-				console.error(error);
+				const articleList = await loadArticle();
+				articles.push(...articleList.items);
+			} catch (e) {
+				console.error(e);
 			}
 		}
 	});
@@ -57,7 +59,7 @@
 					{/each}
 				</div>
 			</div>
-			<div class="absolute bottom-0 right-0 z-50 m-8">
+			<div class="fixed bottom-0 right-0 z-50 m-8">
 				<AddUrlDialog onAdd={handleAdd} />
 			</div>
 		</Sidebar.Inset>
