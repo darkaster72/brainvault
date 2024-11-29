@@ -6,14 +6,19 @@
 	import '../app.css';
 
 	let { children } = $props();
-	theme.subscribe((value) => {
-		document.documentElement.className = value;
-	});
 
 	onMount(() => {
+		const unsubscribe = theme.subscribe((value) => {
+			document.documentElement.className = value;
+		});
+
 		if (!$currentUser) {
 			goto('/login');
 		}
+
+		() => {
+			unsubscribe();
+		};
 	});
 </script>
 
