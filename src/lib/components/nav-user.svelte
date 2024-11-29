@@ -4,15 +4,19 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
+	import { theme, toggleTheme } from '$lib/theme';
 	import { abbreviate } from '$lib/utils/user-utils';
 	import BadgeCheck from 'lucide-svelte/icons/badge-check';
 	import Bell from 'lucide-svelte/icons/bell';
 	import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down';
 	import CreditCard from 'lucide-svelte/icons/credit-card';
 	import LogOut from 'lucide-svelte/icons/log-out';
+	import Moon from 'lucide-svelte/icons/moon';
 	import Sparkles from 'lucide-svelte/icons/sparkles';
+	import Sun from 'lucide-svelte/icons/sun';
 
 	let { user }: { user: { name: string; email: string; avatar: string } } = $props();
+
 	const sidebar = useSidebar();
 </script>
 
@@ -63,6 +67,15 @@
 					<DropdownMenu.Item>
 						<Sparkles />
 						Upgrade to Pro
+					</DropdownMenu.Item>
+					<DropdownMenu.Item closeOnSelect={false} onclick={toggleTheme}>
+						<span class="flex gap-2">
+							{#if $theme === 'light'}
+								<Moon /> Switch to Dark Mode
+							{:else}
+								<Sun /> Switch to Light Mode
+							{/if}
+						</span>
 					</DropdownMenu.Item>
 				</DropdownMenu.Group>
 				<DropdownMenu.Separator />
