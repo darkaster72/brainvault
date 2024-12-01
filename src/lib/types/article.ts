@@ -80,7 +80,10 @@ export class ArticleView implements Article {
 		return this.article.userid;
 	}
 	get timeToRead() {
-		return Math.ceil(this.length / 240) + ' min read';
+		const wordsPerMinute = 200;
+		const words = this.length / 5; // average word length is 5 characters
+		const minutes = Math.ceil(words / wordsPerMinute);
+		return `${minutes} min read`;
 	}
 
 	get isArticleReady() {
