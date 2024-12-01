@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 
 export interface Article {
 	byline: string;
-	content: string;
 	content_status: 'loading' | 'loaded' | 'error';
 	created: string;
 	description: string;
@@ -21,14 +20,19 @@ export interface Article {
 	userid: string;
 }
 
+interface Content {
+	id: string;
+	content: string;
+}
+
 export class ArticleView implements Article {
-	constructor(private article: Article) {}
+	constructor(private article: Article & { expand?: { slug: Content } }) {}
 
 	get byline() {
 		return this.article.byline;
 	}
 	get content() {
-		return this.article.content;
+		return this.article.expand?.slug?.content;
 	}
 	get content_status() {
 		return this.article.content_status;

@@ -2,15 +2,6 @@
 	import { page } from '$app/stores';
 	import { loadArticleById } from '$lib/api/article-api';
 	import Loading from '$lib/components/ui/loading/loading-spinner.svelte';
-	import { onMount } from 'svelte';
-
-	onMount(async () => {
-		try {
-			// article = await loadArticleById($page.params.id);
-		} catch (error) {
-			console.error(error);
-		}
-	});
 </script>
 
 <header class="dark:bg-gray-900 dark:text-gray-100">

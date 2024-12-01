@@ -3,8 +3,7 @@ import { ArticleView, type Article } from '$lib/types/article';
 
 export async function loadArticle(page = 0, limit = 20) {
 	const resultList = await pb.collection('articles').getList<ArticleView>(page, limit, {
-		sort: '-created',
-		expand: 'userid'
+		sort: '-created'
 	});
 
 	resultList.items = resultList.items.map((article) => new ArticleView(article));
@@ -16,5 +15,9 @@ export async function saveArticle(article: Partial<Article>) {
 }
 
 export async function loadArticleById(id: string) {
-	return new ArticleView(await pb.collection('articles').getOne<Article>(id));
+	return new ArticleView(
+		await pb.collection('articles').getOne<Article>(id, {
+			expand: 'slug'
+		})
+	);
 }
