@@ -17,7 +17,7 @@
 		async onUpdate({ form }) {
 			try {
 				await pb.collection('users').authWithPassword(form.data.username, form.data.password);
-				goto('/');
+				goto('/home');
 			} catch (error) {
 				setError(form, 'username', 'Invalid username or password');
 				setError(form, 'password', 'Invalid username or password');
