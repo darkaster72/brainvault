@@ -8,6 +8,7 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { pb } from '$lib/pocketbase';
+	import { toast } from 'svelte-sonner';
 	import { fade } from 'svelte/transition';
 	import { type Infer, setError, superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
@@ -38,11 +39,16 @@
 	});
 
 	const resendVerificationEmail = async () => {
-		await pb.collection('users').requestVerification($formData.username);
+		if (!$formData.username) {
+			toast('Enter username');
+			setError(data, 'username', 'Invalid username or password');
+		} else {
+			await pb.collection('users').requestVerification($formData.username);
+			toast('Verification email sent');
+		}
 	};
 
 	const { form: formData, enhance } = form;
-	$inspect($formData);
 </script>
 
 <Card.Root class="mx-auto max-w-sm">

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { currentUser } from '$lib/auth';
+	import { Toaster } from '$lib/components/ui/sonner/index.js';
 	import { theme } from '$lib/theme';
 	import { onMount } from 'svelte';
 	import '../app.css';
@@ -22,5 +23,7 @@
 		};
 	});
 </script>
+
+<Toaster />
 
 {@render children()}
