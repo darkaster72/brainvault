@@ -13,6 +13,7 @@
 		});
 
 		if (!$currentUser) {
+			console.log('redirecting to login');
 			goto('/login');
 		}
 

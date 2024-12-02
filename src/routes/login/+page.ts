@@ -11,7 +11,8 @@ export const load: PageLoad = async () => {
 
 export const _formSchema = z.object({
 	username: z.string().min(2).max(50),
-	password: z.string().min(8).max(50)
+	password: z.string().min(8).max(50),
+	verified: z.boolean().optional()
 });
 
-export type FormSchema = typeof _formSchema;
+export type LoginSchema = typeof _formSchema;

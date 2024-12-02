@@ -19,7 +19,7 @@
 
 	const handleAdd = async (url: string) => {
 		try {
-			await saveArticle({ url, title: url, userid: $currentUser.id });
+			await saveArticle({ url, title: url, userid: $currentUser!.id });
 		} catch (e) {
 			console.error(e);
 		}
@@ -27,6 +27,7 @@
 
 	onMount(async () => {
 		if (!$currentUser) {
+			console.log('redirecting to login');
 			goto('/login');
 			return;
 		}

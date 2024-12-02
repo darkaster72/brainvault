@@ -35,12 +35,12 @@
 			</p>
 			<div class="space-x-4">
 				<a
-					href="/"
+					href="/register"
 					class="rounded-full bg-blue-600 px-6 py-3 text-lg text-white shadow-lg transition hover:bg-blue-700 hover:shadow-xl"
 				>
 					Get Started
 				</a>
-				<a href="/sign-up" class="text-blue-600 transition hover:text-blue-800"> Learn More </a>
+				<a href="/" class="text-blue-600 transition hover:text-blue-800"> Learn More </a>
 			</div>
 		</header>
 
