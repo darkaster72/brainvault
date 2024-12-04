@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>BrainVault - Your Knowledge, Vaulted</title>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800 antialiased">
+<main class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800 antialiased">
 	<div class="container mx-auto max-w-6xl px-4">
 		<!-- Navigation -->
 		<nav class="animate-fade-in flex items-center justify-between py-6">
@@ -130,7 +130,7 @@
 			<p class="text-gray-500">&copy; 2024 BrainVault. All rights reserved.</p>
 		</footer>
 	</div>
-</body>
+</main>
 
 <style>
 	/* Custom smooth scroll and animation */
