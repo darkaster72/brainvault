@@ -82,7 +82,7 @@
 		<!-- <NavProjects projects={data.projects} /> -->
 	</Sidebar.Content>
 	<Sidebar.Footer>
-		<NavUser user={$currentUser} />
+		<NavUser user={$currentUser!} />
 	</Sidebar.Footer>
 	<Sidebar.Rail />
 </Sidebar.Root>

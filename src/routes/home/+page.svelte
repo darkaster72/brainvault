@@ -16,6 +16,7 @@
 
 	let articles: ArticleView[] = $state([]);
 	let unsubscribe: () => void;
+	let timeout: number;
 
 	const handleAdd = async (url: string) => {
 		try {
@@ -24,6 +25,17 @@
 			console.error(e);
 		}
 	};
+	let filter = $state('');
+
+	$effect(() => {
+		console.log('Filter changed: ', filter);
+		clearTimeout(timeout);
+		timeout = setTimeout(() => {
+			loadArticle({ filter }).then((articleList) => {
+				articles = articleList.items;
+			});
+		}, 250);
+	});
 
 	onMount(async () => {
 		if (!$currentUser) {
@@ -33,8 +45,6 @@
 		}
 
 		try {
-			const articleList = await loadArticle();
-			articles = articleList.items;
 			unsubscribe = await pb
 				.collection('articles')
 				.subscribe<Article>('*', ({ action, record }) => {
@@ -70,7 +80,7 @@
 				<Breadcrumb.Root>
 					<Breadcrumb.List>
 						<Breadcrumb.Item class="">
-							<Input class="w-full" placeholder="Search by title"></Input>
+							<Input class="w-72" placeholder="Search by title" bind:value={filter}></Input>
 						</Breadcrumb.Item>
 					</Breadcrumb.List>
 				</Breadcrumb.Root>

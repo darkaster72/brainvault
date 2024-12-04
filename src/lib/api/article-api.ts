@@ -1,9 +1,15 @@
 import { pb } from '$lib/pocketbase';
 import { ArticleView, type Article } from '$lib/types/article';
 
-export async function loadArticle(page = 0, limit = 20) {
+export async function loadArticle({ page = 0, limit = 20, filter = '' } = {}) {
 	const resultList = await pb.collection('articles').getList<ArticleView>(page, limit, {
-		sort: '-created'
+		sort: '-created',
+		filter: pb.filter(
+			'title ~ {:filter} || description ~ {:filter} || siteName ~ {:filter} || excerpt ~ {:filter}',
+			{
+				filter
+			}
+		)
 	});
 
 	resultList.items = resultList.items.map((article) => new ArticleView(article));
