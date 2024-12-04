@@ -26,4 +26,8 @@
 
 <Toaster />
 
+<svelte:head>
+	<title>BrainVault - Your Knowledge, Vaulted</title>
+</svelte:head>
+
 {@render children()}

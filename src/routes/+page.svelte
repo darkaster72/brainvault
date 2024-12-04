@@ -1,11 +1,6 @@
 <script lang="ts">
 </script>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>BrainVault - Your Knowledge, Vaulted</title>
-</head>
 <main class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800 antialiased">
 	<div class="container mx-auto max-w-6xl px-4">
 		<!-- Navigation -->
