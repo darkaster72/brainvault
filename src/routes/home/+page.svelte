@@ -86,7 +86,7 @@
 				</Breadcrumb.Root>
 			</header>
 			<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-				<div class="grid gap-4">
+				<div class="grid divide-y divide-gray-100">
 					{#if articles.length === 0}
 						<p>No articles yet</p>
 					{/if}
