@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib';
-	import { loadArticle, saveArticle } from '$lib/api/article-api';
+	import { deleteArticles, loadArticle, saveArticle } from '$lib/api/article-api';
 	import { currentUser } from '$lib/auth';
 	import AddUrlDialog from '$lib/components/AddUrlDialog.svelte';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
 	import ArticleTile from '$lib/components/ArticleTile.svelte';
-	import SearchBox from '$lib/components/SearchBox.svelte';
+	import SearchActionBox from '$lib/components/SearchActionBox.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
-	import { Separator } from '$lib/components/ui/separator/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import type { Article } from '$lib/types/article';
-	import { ArticleView } from '$lib/types/article';
+	import type { Article } from '$lib/types/article.svelte';
+	import { ArticleView } from '$lib/types/article.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
-	let articles: ArticleView[] = $state([]);
+	let articles = $state<ArticleView[]>([]);
+	let selectedArticles = $derived(articles.filter((a) => a.selected));
 	let unsubscribe: () => void;
 	let timeout: number;
 
@@ -26,6 +26,17 @@
 		}
 	};
 	let filter = $state('');
+
+	const deleteSelected = async () => {
+		try {
+			await deleteArticles(...selectedArticles.map((a) => a.id));
+			loadArticle({ filter }).then((articleList) => {
+				articles = articleList.items;
+			});
+		} catch (e) {
+			console.error(e);
+		}
+	};
 
 	$effect(() => {
 		console.log('Filter changed: ', filter);
@@ -71,27 +82,34 @@
 </script>
 
 {#if $currentUser}
-	<Sidebar.Provider style="--sidebar-width: 19rem;">
+	<Sidebar.Provider style="--sidebar-width: 16rem;">
 		<AppSidebar />
 		<Sidebar.Inset>
 			<header class="flex h-16 shrink-0 items-center gap-2 px-4">
 				<Sidebar.Trigger class="-ml-1" />
-				<Separator orientation="vertical" class="mr-2 h-4" />
 				<Breadcrumb.Root>
 					<Breadcrumb.List>
 						<Breadcrumb.Item class="">
-							<SearchBox bind:value={filter} placeholder="Search by Title" />
+							<SearchActionBox
+								actionMode={!!selectedArticles.length}
+								articleLength={selectedArticles.length}
+								totalArticles={articles.length}
+								{deleteSelected}
+								selectAll={(value) => articles.forEach((a) => (a.selected = value))}
+								bind:value={filter}
+								placeholder="Search by Title"
+							/>
 						</Breadcrumb.Item>
 					</Breadcrumb.List>
 				</Breadcrumb.Root>
 			</header>
-			<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+			<div class="flex flex-1 flex-col gap-4 px-7 py-4 pt-0">
 				<div class="grid divide-y divide-gray-100">
 					{#if articles.length === 0}
 						<p>No articles yet</p>
 					{/if}
 					{#each articles as article (article.id)}
-						<ArticleTile {article} />
+						<ArticleTile {article} onSelect={(value) => (article.selected = value)} />
 					{/each}
 				</div>
 			</div>

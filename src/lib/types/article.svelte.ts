@@ -26,6 +26,7 @@ interface Content {
 }
 
 export class ArticleView implements Article {
+	#selected: boolean = $state(false);
 	constructor(private article: Article & { expand?: { slug: Content } }) {}
 
 	get byline() {
@@ -113,5 +114,13 @@ export class ArticleView implements Article {
 		}
 
 		return byline.filter((e) => !!e).join(' | ');
+	}
+
+	get selected() {
+		return this.#selected;
+	}
+
+	set selected(value: boolean) {
+		this.#selected = value;
 	}
 }
