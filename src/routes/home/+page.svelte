@@ -6,8 +6,8 @@
 	import AddUrlDialog from '$lib/components/AddUrlDialog.svelte';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
 	import ArticleTile from '$lib/components/ArticleTile.svelte';
+	import SearchBox from '$lib/components/SearchBox.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
-	import Input from '$lib/components/ui/input/input.svelte';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import type { Article } from '$lib/types/article';
@@ -80,7 +80,7 @@
 				<Breadcrumb.Root>
 					<Breadcrumb.List>
 						<Breadcrumb.Item class="">
-							<Input class="w-72" placeholder="Search by title" bind:value={filter}></Input>
+							<SearchBox bind:value={filter} placeholder="Search by Title" />
 						</Breadcrumb.Item>
 					</Breadcrumb.List>
 				</Breadcrumb.Root>
