@@ -42,14 +42,12 @@
 	<Dialog.Content>
 		<form use:enhance method="POST">
 			<Dialog.Header>
-				<Dialog.Title>Add Url</Dialog.Title>
-				<Dialog.Description>Add an articles url</Dialog.Description>
+				<Dialog.Title>Add URL for article</Dialog.Title>
 			</Dialog.Header>
 			<div class="py-4">
 				<Form.Field {form} name="url">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Username</Form.Label>
 							<Input {...props} bind:value={$formData.url} />
 						{/snippet}
 					</Form.Control>
