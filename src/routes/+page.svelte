@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { currentUser } from '$lib/auth';
 </script>
 
 <main class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800 antialiased">
@@ -9,11 +10,19 @@
 			<div class="space-x-4">
 				<a href="/" class="text-gray-600 transition hover:text-blue-600">Features</a>
 				<a href="/" class="text-gray-600 transition hover:text-blue-600">Pricing</a>
-				<a
-					href="/login"
-					class="rounded-full bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-					>Login</a
-				>
+				{#if $currentUser}
+					<a
+						href="/home"
+						class="rounded-full bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+						>Open App</a
+					>
+				{:else}
+					<a
+						href="/login"
+						class="rounded-full bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+						>Login</a
+					>
+				{/if}
 			</div>
 		</nav>
 

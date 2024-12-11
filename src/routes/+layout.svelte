@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { currentUser } from '$lib/auth';
 	import { Toaster } from '$lib/components/ui/sonner/index.js';
 	import { theme } from '$lib/theme';
 	import { onMount } from 'svelte';
@@ -12,11 +10,6 @@
 		const unsubscribe = theme.subscribe((value) => {
 			document.documentElement.className = value;
 		});
-
-		if (!$currentUser) {
-			console.log('redirecting to login');
-			goto('/login');
-		}
 
 		() => {
 			unsubscribe();

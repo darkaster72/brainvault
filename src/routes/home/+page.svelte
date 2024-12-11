@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { pb } from '$lib';
 	import { deleteArticles, loadArticle, saveArticle } from '$lib/api/article-api';
 	import { currentUser } from '$lib/auth';
@@ -49,12 +48,6 @@
 	});
 
 	onMount(async () => {
-		if (!$currentUser) {
-			console.log('redirecting to login');
-			goto('/login');
-			return;
-		}
-
 		try {
 			unsubscribe = await pb
 				.collection('articles')
