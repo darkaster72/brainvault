@@ -8,8 +8,9 @@
 		<nav class="animate-fade-in flex items-center justify-between py-6">
 			<div class="text-2xl font-bold text-blue-600">BrainVault</div>
 			<div class="space-x-4">
-				<a href="/" class="text-gray-600 transition hover:text-blue-600">Features</a>
-				<a href="/" class="text-gray-600 transition hover:text-blue-600">Pricing</a>
+				<a href="/" class="hidden text-gray-600 transition hover:text-blue-600 md:block">Features</a
+				>
+				<a href="/" class="hidden text-gray-600 transition hover:text-blue-600 md:block">Pricing</a>
 				{#if $currentUser}
 					<a
 						href="/home"

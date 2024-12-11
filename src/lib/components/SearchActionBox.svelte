@@ -28,9 +28,9 @@
 
 {#if actionMode}
 	<div
-		class="flex h-10 w-96 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm"
+		class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm md:w-96"
 	>
-		<div class="flex items-center gap-4">
+		<div class="hidden items-center gap-4 md:flex">
 			<Checkbox
 				id="select-all-action"
 				size="sm"
@@ -54,8 +54,14 @@
 		</div>
 	</div>
 {:else}
-	<div class="flex h-10 w-96 items-center rounded-md border-none bg-slate-100 px-3">
-		<Checkbox id="select-all-action" size="sm" onCheckedChange={selectAll} {checked} />
+	<div class="flex h-10 items-center rounded-md border-none bg-slate-100 px-3 md:w-96">
+		<Checkbox
+			id="select-all-action"
+			size="sm"
+			class="hidden md:block"
+			onCheckedChange={selectAll}
+			{checked}
+		/>
 		<input
 			bind:value
 			class={cn(
