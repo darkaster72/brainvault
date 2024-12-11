@@ -14,7 +14,7 @@
 </script>
 
 <div class=" cursor-pointer hover:bg-gray-100 hover:shadow-lg">
-	<div class="flex flex-row gap-4 px-8 py-4">
+	<div class="flex flex-row gap-4 px-4 py-4 md:px-8">
 		<div class="">
 			<Checkbox
 				size="sm"
