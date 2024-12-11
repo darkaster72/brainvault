@@ -28,14 +28,15 @@
 
 {#if actionMode}
 	<div
-		class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm md:w-96"
+		class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm md:w-96"
 	>
-		<div class="hidden items-center gap-4 md:flex">
+		<div class="flex items-center gap-4">
 			<Checkbox
 				id="select-all-action"
 				size="sm"
 				onCheckedChange={selectAll}
 				indeterminate={articleLength > 0 && articleLength < totalArticles}
+				class="hidden md:block"
 				{checked}
 			/>
 			<p class="">
@@ -54,7 +55,7 @@
 		</div>
 	</div>
 {:else}
-	<div class="flex h-10 items-center rounded-md border-none bg-slate-100 px-3 md:w-96">
+	<div class="flex h-10 w-full items-center rounded-md border-none bg-slate-100 px-3 md:w-96">
 		<Checkbox
 			id="select-all-action"
 			size="sm"

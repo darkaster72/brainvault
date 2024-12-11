@@ -14,7 +14,7 @@
 		<Loading></Loading>
 	{:then article}
 		<div class="flex w-full items-center justify-center dark:bg-gray-900 dark:text-gray-100">
-			<div class="flex flex-col p-4 md:w-2/3 lg:w-1/2">
+			<div class="flex w-full flex-col p-4 md:w-2/3 lg:w-1/2">
 				<p class="mb-2 text-sm text-slate-800 dark:text-gray-400">
 					{article.formattedDate}
 					{#if article.isArticleReady}

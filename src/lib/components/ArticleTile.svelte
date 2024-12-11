@@ -25,7 +25,7 @@
 		</div>
 		<!-- svelte-ignore a11y_interactive_supports_focus -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="" onclick={handleClick} role="button">
+		<div class="w-full" onclick={handleClick} role="button">
 			<p class="mb-1 text-xs text-gray-800 dark:text-gray-200">
 				{article.daysAgo}
 				{#if article.isArticleReady}
